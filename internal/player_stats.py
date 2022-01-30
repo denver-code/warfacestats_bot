@@ -11,10 +11,8 @@ async def player_stats(message: types.Message):
 
     response = requests.get(f"https://api.wfstats.cf/player/stats?nickname={username}&server={server}").json()
     if "msg" in response:
-        if response["msg"] == "player_not_found":
+        if response["msg"] in ["player_not_found", "player_inactive", "player_hidden"]:
             return await message.reply(response["status"].replace("{}", username)) 
-        elif response["msg"] == "player_inactive":
-            return await message.reply(response["status"].replace("{}", username))
     elif "message" in response:
         if response["message"] == "Internal server error":
             return await message.reply(f"Player {username} not found in server {server}")
@@ -28,7 +26,8 @@ async def player_stats(message: types.Message):
 <b>Statistics for player {username}:</b>
 <b>Server</b>: {server_str}
 <b>Rank</b>: {response["rank_id"]}
-<b>Total play:</b> {response["playtime_h"]} hours
+<b>Total play:</b> {response["playtime_h"]}h {response["playtime_m"]}m
+<b>Experience:</b> {response["experience"]}
 <b>Clan:</b> {response["clan_name"]}
 
 <b>PVP short:</b>
