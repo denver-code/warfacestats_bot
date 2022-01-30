@@ -1,0 +1,6 @@
+version: '2'
+services:
+  wfstats_bot:
+    build: .
+    volumes:
+      - .:/wfstats_bot
