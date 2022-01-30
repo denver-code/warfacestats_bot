@@ -39,7 +39,7 @@ async def set_bot_commands(bot: Bot):
 async def on_startup(_):
     await set_bot_commands(bot)
     register_internal_commands(dp)
-    await bot.send_message(config["OWNER_ID"], '*WFStats - International - Online🟢*', parse_mode="Markdown")
+    # await bot.send_message(config["OWNER_ID"], '*WFStats - International - Online🟢*', parse_mode="Markdown")
 
 
 @dp.message_handler(commands="ping")
