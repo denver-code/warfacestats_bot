@@ -41,18 +41,27 @@ async def callback_query_recognizer(query: types.CallbackQuery):
         await bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
         await player_stats(query.message.reply_to_message)
     elif "pve" in query.data:
+        class_player = None
+        if len(query.data.split("/")) == 4:
+            class_player = query.data.split("/")[-1]
         username = query.data.split("/")[1]
         server = query.data.split("/")[2]
-        await pveinfo_event(query, username, server)
+        await pveinfo_event(query, username, server, class_player)
     elif "pvp" in query.data:
+        class_player = None
+        if len(query.data.split("/")) == 4:
+            class_player = query.data.split("/")[-1]
         username = query.data.split("/")[1]
         server = query.data.split("/")[2]
-        await pvpinfo_event(query, username, server)
+        await pvpinfo_event(query, username, server, class_player)
 
 async def set_bot_commands(bot: Bot):
     commands = [
+        types.BotCommand(command="start", description="Startup command"),
         types.BotCommand(command="ping", description="Basic command - for checking status"),
         types.BotCommand(command="credits", description="Learn more about this bot"),
+        types.BotCommand(command="player", description="<name> Get player info '/player [DenSec]'"),
+        types.BotCommand(command="online", description="<ru/int> Get online for ru or int server"),
     ]
     await bot.set_my_commands(commands)
 
