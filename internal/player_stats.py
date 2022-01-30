@@ -178,6 +178,18 @@ async def pveinfo_event(query, username, server, player_class=None):
         shots += obj["player_shots"]
         play_time += int(str(obj["player_playtime"])[:-1])
 
+    class_str = """
+    """
+    if player_class in ["Rifleman", "Heavy", "Recon", "Engineer", "Medic"]: 
+        class_str =f"""
+<b>{player_class} PVE Statistics:</b>
+- <b>Headshots:</b> {response["class"][player_class]["PVE"]["player_headshots"] if "player_headshots" in response["class"][player_class]["PVE"] else 0}
+- <b>Hits:</b> {response["class"][player_class]["PVE"]["player_hits"] if "player_hits" in response["class"][player_class]["PVE"] else 0}
+- <b>Playtime:</b> {int(int(str(response["class"][player_class]["PVE"]["player_headshots"])[:-1])/3600) if "player_headshots" in response["class"][player_class]["PVE"] else 0}
+- <b>Shots:</b> {response["class"][player_class]["PVE"]["player_shots"] if "player_shots" in response["class"][player_class]["PVE"] else 0}
+"""
+
+
     message_text = f"""
 <b>PVE Statistics for player {username}:</b>
 <b>Server</b>: {server_str}
@@ -204,13 +216,15 @@ async def pveinfo_event(query, username, server, player_class=None):
 - <b>Left from room:</b> {response["mode"]["PVE"]["player_sessions_left"] if "player_sessions_left" in response["mode"]["PVP"] else 0}
 - <b>Kicked from room:</b> {response["mode"]["PVE"]["player_sessions_kicked"] if "player_sessions_kicked" in response["mode"]["PVP"] else 0}
 - <b>Lost Connection:</b> {response["mode"]["PVE"]["player_sessions_lost_connection"] if "player_sessions_lost_connection" in response["mode"]["PVP"] else 0}
+
+{class_str}
 """
     buttons = [
-        types.InlineKeyboardButton(text="Rifleman", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Medic", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Engineer", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Recon", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Heavy", callback_data=f"info/{username}/{server}"),
+        types.InlineKeyboardButton(text="Rifleman", callback_data=f"pve/{username}/{server}/Rifleman"),
+        types.InlineKeyboardButton(text="Medic", callback_data=f"pve/{username}/{server}/Medic"),
+        types.InlineKeyboardButton(text="Engineer", callback_data=f"pve/{username}/{server}/Engineer"),
+        types.InlineKeyboardButton(text="Recon", callback_data=f"pve/{username}/{server}/Recon"), 
+        types.InlineKeyboardButton(text="Heavy", callback_data=f"pve/{username}/{server}/Heavy"),
         types.InlineKeyboardButton(text="Back", callback_data=f"info/{username}/{server}"),
     ]
     keyboard = types.InlineKeyboardMarkup()
@@ -258,7 +272,18 @@ async def pvpinfo_event(query, username, server, player_class=None):
         hits += obj["player_hits"]
         shots += obj["player_shots"]
         play_time += int(str(obj["player_playtime"])[:-1])
-            
+
+    class_str = """
+    """
+    if player_class in ["Rifleman", "Heavy", "Recon", "Engineer", "Medic"]: 
+        class_str =f"""
+<b>{player_class} PVP Statistics:</b>
+- <b>Headshots:</b> {response["class"][player_class]["PVP"]["player_headshots"] if "player_headshots" in response["class"][player_class]["PVP"] else 0}
+- <b>Hits:</b> {response["class"][player_class]["PVP"]["player_hits"] if "player_hits" in response["class"][player_class]["PVP"] else 0}
+- <b>Playtime:</b> {int(int(str(response["class"][player_class]["PVP"]["player_headshots"])[:-1])/3600) if "player_headshots" in response["class"][player_class]["PVP"] else 0}
+- <b>Shots:</b> {response["class"][player_class]["PVP"]["player_shots"] if "player_shots" in response["class"][player_class]["PVP"] else 0}
+"""      
+
     message_text = f"""
 <b>PVP Statistics for player {username}:</b>
 <b>Server</b>: {server_str}
@@ -286,13 +311,15 @@ async def pvpinfo_event(query, username, server, player_class=None):
 - <b>Kicked from room:</b> {response["mode"]["PVP"]["player_sessions_kicked"] if "player_sessions_kicked" in response["mode"]["PVP"] else 0}
 - <b>Lost Connection:</b> {response["mode"]["PVP"]["player_sessions_lost_connection"] if "player_sessions_lost_connection" in response["mode"]["PVP"] else 0}
 - <b>Sessions Draw:</b> {response["mode"]["PVP"]["player_sessions_draw"] if "player_sessions_draw" in response["mode"]["PVP"] else 0}
+
+{class_str}
 """
     buttons = [
-        types.InlineKeyboardButton(text="Rifleman", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Medic", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Engineer", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Recon", callback_data=f"info/{username}/{server}"),
-        types.InlineKeyboardButton(text="Heavy", callback_data=f"info/{username}/{server}"),
+        types.InlineKeyboardButton(text="Rifleman", callback_data=f"pve/{username}/{server}/Rifleman"),
+        types.InlineKeyboardButton(text="Medic", callback_data=f"pve/{username}/{server}/Medic"),
+        types.InlineKeyboardButton(text="Engineer", callback_data=f"pve/{username}/{server}/Engineer"),
+        types.InlineKeyboardButton(text="Recon", callback_data=f"pve/{username}/{server}/Recon"),
+        types.InlineKeyboardButton(text="Heavy", callback_data=f"pve/{username}/{server}/Heavy"),
         types.InlineKeyboardButton(text="Back", callback_data=f"info/{username}/{server}"),
     ]
     keyboard = types.InlineKeyboardMarkup()
