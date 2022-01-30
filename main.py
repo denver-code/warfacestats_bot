@@ -27,6 +27,7 @@ from aiogram import Bot, Dispatcher, executor, types
 bot = Bot(token=config["TOKEN"])
 dp = Dispatcher(bot)
 
+
 async def set_bot_commands(bot: Bot):
     commands = [
         types.BotCommand(command="ping", description="Basic command - for checking status"),
@@ -34,14 +35,17 @@ async def set_bot_commands(bot: Bot):
     ]
     await bot.set_my_commands(commands)
 
+
 async def on_startup(_):
     await set_bot_commands(bot)
     register_internal_commands(dp)
     await bot.send_message(config["OWNER_ID"], '*WFStats - International - Online🟢*', parse_mode="Markdown")
 
+
 @dp.message_handler(commands="ping")
 async def ping_event(message: types.Message):
     await message.reply("Pong!")
+
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
