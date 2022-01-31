@@ -1,7 +1,7 @@
 import os
 import logging
 from handlers.register_internal_command import register_internal_commands
-from internal.player_stats import allinfo_event, player_stats, pveinfo_event, pvpinfo_event
+from internal.player_stats import allinfo_event, player_stats, pveinfo_event, pvpinfo_event, get_clan_event
 
 if not os.path.isdir('logs'):
     os.mkdir("logs")
@@ -37,9 +37,14 @@ async def callback_query_recognizer(query: types.CallbackQuery):
         username = query.data.split("/")[1]
         server = query.data.split("/")[-1]
         await allinfo_event(query, username, server)
+
     elif "info" in query.data:
+        username = query.data.split("/")[1]
+        server = query.data.split("/")[-1]
+        query.message.reply_to_message["text"] = f"/player {username} {server}"
         await bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
         await player_stats(query.message.reply_to_message)
+
     elif "pve" in query.data:
         class_player = None
         if len(query.data.split("/")) == 4:
@@ -47,6 +52,7 @@ async def callback_query_recognizer(query: types.CallbackQuery):
         username = query.data.split("/")[1]
         server = query.data.split("/")[2]
         await pveinfo_event(query, username, server, class_player)
+
     elif "pvp" in query.data:
         class_player = None
         if len(query.data.split("/")) == 4:
@@ -54,6 +60,12 @@ async def callback_query_recognizer(query: types.CallbackQuery):
         username = query.data.split("/")[1]
         server = query.data.split("/")[2]
         await pvpinfo_event(query, username, server, class_player)
+
+    elif "clan" in query.data:
+        clan_name = query.data.split("/")[1]
+        server = query.data.split("/")[2]
+        username = query.data.split("/")[3]
+        await get_clan_event(query, clan_name, server, username)
 
 async def set_bot_commands(bot: Bot):
     commands = [

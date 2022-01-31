@@ -60,7 +60,7 @@ async def player_stats(message: types.Message):
         types.InlineKeyboardButton(text="PVP", callback_data=f"pvp/{username}/{server}")
     ]
     if "clan_name" in response:
-        buttons.append(types.InlineKeyboardButton(text="Clan", callback_data=f"clan/{response['clan_name']}/{server}"))
+        buttons.append(types.InlineKeyboardButton(text="Clan", callback_data=f"clan/{response['clan_name']}/{server}/{username}"))
     keyboard = types.InlineKeyboardMarkup()
     keyboard.add(*buttons)
     await message.reply(message_text, parse_mode="HTML", reply_markup=keyboard)
@@ -323,6 +323,42 @@ async def pvpinfo_event(query, username, server, player_class=None):
         types.InlineKeyboardButton(text="Back", callback_data=f"info/{username}/{server}"),
     ]
     keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(*buttons)
+
+    await query.message.edit_text(message_text, parse_mode="HTML", reply_markup=keyboard)
+
+
+async def get_clan_event(query, clanname, server, username):
+    response = requests.get(f"https://api.wfstats.cf/clan/members?name={clanname}&server={server}").json()
+    if "msg" in response:
+        if response["msg"] in ["clan_not_found"]:
+            return await message.reply(response["status"].replace("{}", clanname)) 
+    elif "message" in response:
+        if response["message"] == "Internal server error":
+            return await message.reply(f"Clan {clanname} not found in server {server}")
+    clan = response
+
+    clan_roles = {
+        "OFFICER": "OFFICER",
+        "REGULAR": "SOLIDER",
+        "MASTER": "MASTER"
+    }
+
+    message_text = f"""<b>{clanname} Information:</b>
+- <b>Clan Name:</b> {clanname}
+- <b>ClanID:</b> {clan["id"]}
+- <b>Server:</b> {server}
+- <b>Clan Points:</b> {clan["clan_points"]}
+- <b>Members Count:</b> {len(clan["members"])}
+- <b>Members TOP: (Tap For Get Details)</b>
+"""
+    buttons = []
+
+    for i in clan["members"]:
+        buttons.append(types.InlineKeyboardButton(text=f"{clan_roles[i['clan_role']]}     {i['nickname']}     {i['clan_points']}", callback_data=f"info/{i['nickname']}/{server}"))
+
+    buttons.append(types.InlineKeyboardButton(text="Back", callback_data=f"info/{username}/{server}"),)
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(*buttons)
 
     await query.message.edit_text(message_text, parse_mode="HTML", reply_markup=keyboard)
