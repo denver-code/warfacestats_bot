@@ -23,6 +23,7 @@ and more to come. The list of available commands will be registered in the /help
 - [ ] PVE completion rate
 - [ ] List player weapon usage
 - [ ] Get data from online player
+- [ ] Save user Player for /me command
 
 ### Completed Column ✓
 - [x] Show user statistics
