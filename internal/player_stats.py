@@ -9,6 +9,8 @@ async def player_stats(message: types.Message):
         server = "ru"
     username = work_string.split()[0]
 
+    print(username)
+
     response = requests.get(f"https://api.wfstats.cf/player/stats?nickname={username}&server={server}").json()
     if "msg" in response:
         if response["msg"] in ["player_not_found", "player_inactive", "player_hidden"]:
@@ -16,7 +18,7 @@ async def player_stats(message: types.Message):
     elif "message" in response:
         print(response)
         if response["message"] == "Internal server error":
-            return await message.reply(f"Player {username} not found in server {server}")
+            return await message.reply(f"Player {username} not found in server {server}, or player inactive")
 
     if server == "ru":
         server_str = "Russian"
@@ -70,10 +72,10 @@ async def allinfo_event(query, username, server):
     response = requests.get(f"https://api.wfstats.cf/player/stats?nickname={username}&server={server}").json()
     if "msg" in response:
         if response["msg"] in ["player_not_found", "player_inactive", "player_hidden"]:
-            return await message.reply(response["status"].replace("{}", username)) 
+            return await query.message.reply(response["status"].replace("{}", username)) 
     elif "message" in response:
         if response["message"] == "Internal server error":
-            return await message.reply(f"Player {username} not found in server {server}")
+            return await query.message.reply(f"Player {username} not found in server {server}, or player inactive")
 
     if server == "ru":
         server_str = "Russian"
@@ -142,10 +144,10 @@ async def pveinfo_event(query, username, server, player_class=None):
     response = requests.get(f"https://api.wfstats.cf/player/stats?nickname={username}&server={server}").json()
     if "msg" in response:
         if response["msg"] in ["player_not_found", "player_inactive", "player_hidden"]:
-            return await message.reply(response["status"].replace("{}", username)) 
+            return await query.message.reply(response["status"].replace("{}", username)) 
     elif "message" in response:
         if response["message"] == "Internal server error":
-            return await message.reply(f"Player {username} not found in server {server}")
+            return await query.message.reply(f"Player {username} not found in server {server}, or player inactive")
 
     if server == "ru":
         server_str = "Russian"
@@ -237,10 +239,10 @@ async def pvpinfo_event(query, username, server, player_class=None):
     response = requests.get(f"https://api.wfstats.cf/player/stats?nickname={username}&server={server}").json()
     if "msg" in response:
         if response["msg"] in ["player_not_found", "player_inactive", "player_hidden"]:
-            return await message.reply(response["status"].replace("{}", username)) 
+            return await query.message.reply(response["status"].replace("{}", username)) 
     elif "message" in response:
         if response["message"] == "Internal server error":
-            return await message.reply(f"Player {username} not found in server {server}")
+            return await query.message.reply(f"Player {username} not found in server {server}, or player inactive")
 
     if server == "ru":
         server_str = "Russian"
@@ -332,10 +334,10 @@ async def get_clan_event(query, clanname, server, username):
     response = requests.get(f"https://api.wfstats.cf/clan/members?name={clanname}&server={server}").json()
     if "msg" in response:
         if response["msg"] in ["clan_not_found"]:
-            return await message.reply(response["status"].replace("{}", clanname)) 
+            return await query.message.reply(response["status"].replace("{}", clanname)) 
     elif "message" in response:
         if response["message"] == "Internal server error":
-            return await message.reply(f"Clan {clanname} not found in server {server}")
+            return await query.message.reply(f"Clan {clanname} not found in server {server}")
     clan = response
 
     clan_roles = {
