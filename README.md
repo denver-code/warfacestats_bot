@@ -7,6 +7,8 @@
     Warface Telegram bot with useful tools for the community.
 </p>
 
+> [!NOTE] 
+> Realtime work version located: https://t.me/warfacestats_bot
 Among the tools you could find there is stuff like checking
 current amount of online player per channel, game news,
 reference to useful materials, game ladders, player statistics
