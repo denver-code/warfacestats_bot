@@ -11,7 +11,7 @@ Here you can see statistics about users and clans on Russian or international se
 /player [DenSec]
 Replace "[DenSec]" with a nickname.
 To specify a Russian server, add "ru" to the command:
-/player [DenSec] ru
+/player СтаричокМираАйти ru
 Or basic send text message with nickname and server.
 
 <b>To find out online servers:</b>
