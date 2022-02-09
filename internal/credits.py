@@ -11,9 +11,9 @@ async def credits_event(message: types.Message):
 
 <b>Developer:</b>
 - <b>Telegram</b>:
-  - <a href="tg://user?id={os.getenv("OWNER_ID")}">Igor Savenko aka Denver/DenSec</a>
-- <b>Warface Image</b> - <a href="https://pc.warface.com/custom/ub/MV8xNTUwNTAxOHNvbWVfdG9rZW5fa2V5/b817074b473260eba113eabbd1967fbb/bar.jpg">[DenSec]</a>
-- <b>Warface Promo</b> - <a href="https://pc.warface.com/promo/invite/en/?ref=k9p626">Tap</a>
+  - <a href="tg://user?id={os.getenv("OWNER_ID")}">Igor Savenko aka СтаричокМираАйти</a>
+- <b>Warface Image</b> - <a href="https://ru.warface.com/custom/ub/fbb7ee231cc73b3baa7f1a2550599192/30b70b897669cdd3c06bb6d333115b42/bar.jpg">[DenSec]</a>
+- <b>Warface Promo</b> - <a href="https://ru.warface.com/promo/referal/?ref=3o1na2n">Tap</a>
 
 Stack:
 - <b>Python3</b> + <b>AIOgram</b>
