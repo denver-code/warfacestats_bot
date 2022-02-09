@@ -32,8 +32,6 @@ dp = Dispatcher(bot)
 @dp.callback_query_handler()
 async def callback_query_recognizer(query: types.CallbackQuery):
     if "allinfo" in query.data:
-        # await bot.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
-        # await call.answer(text="Спасибо, что воспользовались ботом!", show_alert=True)
         username = query.data.split("/")[1]
         server = query.data.split("/")[-1]
         await allinfo_event(query, username, server)
@@ -66,6 +64,7 @@ async def callback_query_recognizer(query: types.CallbackQuery):
         server = query.data.split("/")[2]
         username = query.data.split("/")[3]
         await get_clan_event(query, clan_name, server, username)
+
 
 async def set_bot_commands(bot: Bot):
     commands = [

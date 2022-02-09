@@ -263,7 +263,7 @@ async def pvpinfo_event(query, username, server, player_class=None):
 
 
     for i in response["class"]:
-        obj = response["class"][i]["PVE"]
+        obj = response["class"][i]["PVP"]
         items = ["player_headshots", "player_hits", "player_shots"]
         for j in items:
             if j not in obj:
@@ -274,7 +274,8 @@ async def pvpinfo_event(query, username, server, player_class=None):
         hits += obj["player_hits"]
         shots += obj["player_shots"]
         play_time += int(str(obj["player_playtime"])[:-1])
-
+    print(response["class"]["Rifleman"]["PVP"])
+    print(True if "player_playtime" in response["class"]["Rifleman"]["PVP"] else 0)
     class_str = """
     """
     if player_class in ["Rifleman", "Heavy", "Recon", "Engineer", "Medic"]: 
@@ -282,7 +283,7 @@ async def pvpinfo_event(query, username, server, player_class=None):
 <b>{player_class} PVP Statistics:</b>
 - <b>Headshots:</b> {response["class"][player_class]["PVP"]["player_headshots"] if "player_headshots" in response["class"][player_class]["PVP"] else 0}
 - <b>Hits:</b> {response["class"][player_class]["PVP"]["player_hits"] if "player_hits" in response["class"][player_class]["PVP"] else 0}
-- <b>Playtime:</b> {int(int(str(response["class"][player_class]["PVP"]["player_headshots"])[:-1])/3600) if "player_headshots" in response["class"][player_class]["PVP"] else 0}
+- <b>Playtime:</b> {int(int(response["class"][player_class]["PVP"]["player_playtime"])/3600) if "player_playtime" in response["class"][player_class]["PVP"] else 0}
 - <b>Shots:</b> {response["class"][player_class]["PVP"]["player_shots"] if "player_shots" in response["class"][player_class]["PVP"] else 0}
 """      
 
