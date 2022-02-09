@@ -60,10 +60,13 @@ async def callback_query_recognizer(query: types.CallbackQuery):
         await pvpinfo_event(query, username, server, class_player)
 
     elif "clan" in query.data:
+        print(query.data)
         clan_name = query.data.split("/")[1]
-        server = query.data.split("/")[2]
-        username = query.data.split("/")[3]
-        await get_clan_event(query, clan_name, server, username)
+        try:
+            server = query.data.split("/")[2]
+        except:
+            server = "int"
+        await get_clan_event(query, clan_name, server)
 
 
 async def set_bot_commands(bot: Bot):

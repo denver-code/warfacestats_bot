@@ -62,7 +62,7 @@ async def player_stats(message: types.Message):
         types.InlineKeyboardButton(text="PVP", callback_data=f"pvp/{username}/{server}")
     ]
     if "clan_name" in response:
-        buttons.append(types.InlineKeyboardButton(text="Clan", callback_data=f"clan/{response['clan_name']}/{server}/{username}"))
+        buttons.append(types.InlineKeyboardButton(text="Clan", callback_data=f"clan/{response['clan_name']}/{server}"))
     keyboard = types.InlineKeyboardMarkup()
     keyboard.add(*buttons)
     await message.reply(message_text, parse_mode="HTML", reply_markup=keyboard)
@@ -331,7 +331,7 @@ async def pvpinfo_event(query, username, server, player_class=None):
     await query.message.edit_text(message_text, parse_mode="HTML", reply_markup=keyboard)
 
 
-async def get_clan_event(query, clanname, server, username):
+async def get_clan_event(query, clanname, server):
     response = requests.get(f"https://api.wfstats.cf/clan/members?name={clanname}&server={server}").json()
     if "msg" in response:
         if response["msg"] in ["clan_not_found"]:
@@ -360,7 +360,7 @@ async def get_clan_event(query, clanname, server, username):
     for i in clan["members"]:
         buttons.append(types.InlineKeyboardButton(text=f"{clan_roles[i['clan_role']]}     {i['nickname']}     {i['clan_points']}", callback_data=f"info/{i['nickname']}/{server}"))
 
-    buttons.append(types.InlineKeyboardButton(text="Back", callback_data=f"info/{username}/{server}"),)
+    # buttons.append(types.InlineKeyboardButton(text="Back", callback_data=f"info/{username}/{server}"),)
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     keyboard.add(*buttons)
 
