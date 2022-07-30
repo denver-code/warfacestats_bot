@@ -11,6 +11,8 @@
 
 > [!NOTE]   
 > Realtime work version located: https://t.me/warfacestats_bot  
+
+You can view video on my website - https://savenko.vercel.app/works/wfstats
    
 Among the tools you could find there is stuff like checking
 current amount of online player per channel, game news,
